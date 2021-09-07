@@ -1,0 +1,27 @@
+{
+  "name": "svalit",
+  "version": "0.1.0-alpha.1",
+  "description": "SSR Vanilla Async Lit",
+  "main": "index.mjs",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PonomareVlad/Svalit.git"
+  },
+  "keywords": [
+    "SSR",
+    "Vanilla",
+    "Async",
+    "Lit"
+  ],
+  "author": {
+    "name": "Vladislav Ponomarev",
+    "email": "Git@PonomareVlad.ru",
+    "url": "https://PonomareVlad.ru"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/PonomareVlad/Svalit/issues"
+  },
+  "homepage": "https://github.com/PonomareVlad/Svalit#readme"
+}
