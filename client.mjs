@@ -1,5 +1,5 @@
 import 'lit/experimental-hydrate-support.js'
-import {syncImport} from './loader.mjs'
+import {syncImport} from 'svalit/loader.mjs'
 import {hydrateShadowRoots} from '@webcomponents/template-shadowroot'
 
 if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot')) hydrateShadowRoots(document.body)
