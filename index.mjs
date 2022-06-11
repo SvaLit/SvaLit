@@ -1,7 +1,7 @@
 import {readFileSync} from "fs";
 import EventEmitter from "events";
 import {Generator} from "@jspm/generator";
-import {imports, resetImports} from "./loader.mjs";
+import {resetImports, exportImports} from "./loader.mjs";
 import {readableFrom} from "@svalit/ssr/lib/readable.js";
 import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
 
@@ -70,19 +70,19 @@ export default class RenderThread {
         return [
             this.shim ? this.scriptTemplate(JSON.stringify({"shimMode": true}), {type: 'esms-options'}) : null,
             this.scriptTemplate(JSON.stringify(this.importMapOptions.inputMap || {}, null, 4), {type: "importmap"}),
-            Object.keys(imports) ? this.scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`) : null,
+            this.scriptTemplate(`window.imports=${JSON.stringify(exportImports())}`),
             this.scriptTemplate(`window.env=${JSON.stringify(this.env)}`),
             this.scriptTemplate(`window.meta=${JSON.stringify(meta)}`),
             this.scriptTemplate(this.content.loader, {type: "module", defer: null}),
-            this.importsTemplate(imports),
+            this.importsTemplate(exportImports()),
             this.content.footer,
             `</body></html>`
         ].filter(Boolean).join('\n')
     }
 
-    importsTemplate(imports = [], attributes = {type: "module", import: null, defer: null}) {
+    importsTemplate(imports = exportImports(), attributes = {type: "module", import: null, defer: null}) {
         const importTemplate = (url) => `import '${url.startsWith('/') ? ('#root' + url) : url}';`
-        return Object.keys(imports).map(url => this.scriptTemplate(importTemplate(url), attributes)).join('\n')
+        return imports.map(url => this.scriptTemplate(importTemplate(url), attributes)).join('\n')
     }
 
     scriptTemplate(source = '', attributes = {}) {

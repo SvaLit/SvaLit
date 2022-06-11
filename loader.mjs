@@ -31,4 +31,6 @@ export function syncImport(path, base = appBase) {
     return import(url).then(module => imports[id] = module)
 }
 
+export const exportImports = () => Object.keys(imports)
+
 const isURL = str => str.startsWith('http://') || str.startsWith('https://') || str.startsWith('/') || str.startsWith('.')

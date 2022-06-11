@@ -14,6 +14,7 @@ export class SafeUntil {
     safeUntil(p, ...args) {
         if (p instanceof Promise && typeof process !== 'object' && !this.hasUpdated) {
             console.error('Async hydration in', this)
+            console.debug(p)
             return syncUntil(undefined, ...args)
         }
         return syncUntil(p, ...args)
