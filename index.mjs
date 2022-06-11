@@ -5,21 +5,24 @@ import {imports, resetImports} from "./loader.mjs";
 import {readableFrom} from "@svalit/ssr/lib/readable.js";
 import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
 
-const defaultClientLoader = readFileSync(new URL('client.mjs', import.meta.url))
+const clientLoader = readFileSync(new URL('client.mjs', import.meta.url))
 
 export default class RenderThread {
     html = ''
     meta = {}
     chunks = []
+    generationOptions = {}
+    content = {loader: clientLoader}
     renderEvents = new EventEmitter()
     renderingPromise = Promise.resolve()
     importMapOptions = {inputMap: {imports: {'#root/': './'}}}
 
-    constructor({meta = {}, dev = false, importMapOptions = {}, headContent, footerContent, clientLoader} = {}) {
+    constructor({dev, shim, meta = {}, content = {}, importMapOptions = {}, generationOptions = {}} = {}) {
         Object.assign(this.meta, meta)
+        Object.assign(this.content, content)
+        Object.assign(this, {dev, shim})
         Object.assign(this.importMapOptions, importMapOptions)
-        this.clientLoader = clientLoader || defaultClientLoader
-        Object.assign(this, {dev, headContent, footerContent})
+        Object.assign(this.generationOptions, generationOptions)
         this.renderEvents.once('meta', this.metaHandler.bind(this))
         this.meta.setMeta = data => this.renderEvents.emit('meta', data)
         this.importMapGenerator = new Generator(Object.assign({env: this.env}, this.importMapOptions))
@@ -40,8 +43,10 @@ export default class RenderThread {
 
     async streamHandler() {
         this.renderEvents.emit('meta', {})
-        const footer = await this.importMapGenerator.htmlGenerate(this.footerTemplate())
-        const html = Buffer.concat(this.chunks) + this.shimScripts(footer)
+        const footer = this.importMapOptions.disableGeneration ? this.footerTemplate() :
+            await this.importMapGenerator.htmlGenerate(this.footerTemplate(), this.generationOptions)
+        const updatedFooter = this.disableImports(footer)
+        const html = Buffer.concat(this.chunks) + (this.shim ? this.shimScripts(updatedFooter) : updatedFooter)
         resetImports()
         return this.html = html
     }
@@ -55,7 +60,7 @@ export default class RenderThread {
     headTemplate({title = 'SvaLit'} = this.meta) {
         return [
             `<!doctype html><html lang="en"><head>`,
-            this.headContent,
+            this.content.head,
             `<title>${title}</title>`,
             `</head><body>`
         ].filter(Boolean).join('\n')
@@ -63,19 +68,19 @@ export default class RenderThread {
 
     footerTemplate(meta = this.meta) {
         return [
-            this.scriptTemplate(JSON.stringify({"shimMode": true}), {type: 'esms-options'}),
-            this.scriptTemplate(JSON.stringify(this.importMapOptions.inputMap || {}), {type: "importmap"}),
+            this.shim ? this.scriptTemplate(JSON.stringify({"shimMode": true}), {type: 'esms-options'}) : null,
+            this.scriptTemplate(JSON.stringify(this.importMapOptions.inputMap || {}, null, 4), {type: "importmap"}),
             Object.keys(imports) ? this.scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`) : null,
             this.scriptTemplate(`window.env=${JSON.stringify(this.env)}`),
             this.scriptTemplate(`window.meta=${JSON.stringify(meta)}`),
-            this.scriptTemplate(this.clientLoader, {type: "module", defer: null}),
+            this.scriptTemplate(this.content.loader, {type: "module", defer: null}),
             this.importsTemplate(imports),
-            this.footerContent,
+            this.content.footer,
             `</body></html>`
         ].filter(Boolean).join('\n')
     }
 
-    importsTemplate(imports = [], attributes = {type: "module", defer: null}) {
+    importsTemplate(imports = [], attributes = {type: "module", import: null, defer: null}) {
         const importTemplate = (url) => `import '${url.startsWith('/') ? ('#root' + url) : url}';`
         return Object.keys(imports).map(url => this.scriptTemplate(importTemplate(url), attributes)).join('\n')
     }
@@ -88,5 +93,9 @@ export default class RenderThread {
 
     shimScripts(source) {
         return source.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"')
+    }
+
+    disableImports(source) {
+        return source.replaceAll('type="module" import', 'type="module-disabled"')
     }
 }

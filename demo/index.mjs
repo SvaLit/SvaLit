@@ -8,15 +8,7 @@ import Router from 'router'
 const options = {
     dev: true,
     meta: {title: 'Svalit Demo'},
-    importMapOptions: {
-        // ignore: ["svalit"],
-        // inputMap: {imports: {'#svalit/': './'}},
-        // rootUrl: new URL('../', import.meta.url),
-        // mapUrl: new URL('../', import.meta.url),
-        // baseUrl: new URL('../', import.meta.url),
-        // resolutions: {'#svalit': new URL('../', import.meta.url)}
-    },
-    footerContent: `<script type="module" defer>${readFileSync(new URL('template.mjs', import.meta.url))}</script>`
+    content: {footer: `<script type="module" defer>${readFileSync(new URL('template.mjs', import.meta.url))}</script>`}
 }
 
 const router = Router()

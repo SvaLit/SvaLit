@@ -9,14 +9,14 @@ export const resetImports = () => imports = {}
 export function syncImport(path, base = appBase) {
     let url = path;
     let id = path;
-    if (path.startsWith('/') || path.startsWith('.')) try {
+    if (isURL(path)) try {
         url = new URL(path, base).href
         id = url.split(appBase).pop()
     } catch (e) {
         console.error(e)
     }
     if (imports[id]) return imports[id]
-    if (typeof process !== 'object') {
+    if (typeof process !== 'object' && !isURL(url)) {
         try {
             import.meta.resolve(url)
         } catch (e) {
@@ -30,3 +30,5 @@ export function syncImport(path, base = appBase) {
     }
     return import(url).then(module => imports[id] = module)
 }
+
+const isURL = str => str.startsWith('http://') || str.startsWith('https://') || str.startsWith('/') || str.startsWith('.')
