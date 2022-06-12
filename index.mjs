@@ -7,7 +7,7 @@ import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
 
 const clientLoader = readFileSync(new URL('client.mjs', import.meta.url))
 
-export default class RenderThread {
+export class RenderThread {
     html = ''
     meta = {}
     chunks = []
@@ -99,3 +99,6 @@ export default class RenderThread {
         return source.replaceAll('type="module" import', 'type="module-disabled"')
     }
 }
+
+export {render, readableFrom}
+export default RenderThread

@@ -1,6 +1,6 @@
 {
   "name": "svalit",
-  "version": "0.1.0-alpha.7",
+  "version": "0.1.0-alpha.8",
   "description": "SSR Vanilla Async Lit",
   "main": "index.mjs",
   "type": "module",
@@ -28,6 +28,7 @@
     "./utils.mjs": "./utils.mjs",
     "./client.mjs": "./client.mjs",
     "./loader.mjs": "./loader.mjs",
+    "./prerender.mjs": "./prerender.mjs",
     "./directives.mjs": "./directives.mjs",
     "./controllers.mjs": "./controllers.mjs"
   },
