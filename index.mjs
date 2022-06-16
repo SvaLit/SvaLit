@@ -10,6 +10,7 @@ const clientLoader = readFileSync(new URL('client.mjs', import.meta.url))
 export class RenderThread {
     html = ''
     meta = {}
+    shim = {}
     chunks = []
     generationOptions = {}
     content = {loader: clientLoader}
@@ -17,10 +18,11 @@ export class RenderThread {
     renderingPromise = Promise.resolve()
     importMapOptions = {inputMap: {imports: {'#root/': './'}}}
 
-    constructor({dev, shim, meta = {}, content = {}, importMapOptions = {}, generationOptions = {}} = {}) {
+    constructor({dev, shim = {}, meta = {}, content = {}, importMapOptions = {}, generationOptions = {}} = {}) {
         Object.assign(this.meta, meta)
+        Object.assign(this.shim, shim)
+        Object.assign(this, {dev})
         Object.assign(this.content, content)
-        Object.assign(this, {dev, shim})
         Object.assign(this.importMapOptions, importMapOptions)
         Object.assign(this.generationOptions, generationOptions)
         this.renderEvents.once('meta', this.metaHandler.bind(this))
@@ -68,7 +70,7 @@ export class RenderThread {
 
     footerTemplate(meta = this.meta) {
         return [
-            this.shim ? this.scriptTemplate(JSON.stringify({"shimMode": true}), {type: 'esms-options'}) : null,
+            this.scriptTemplate(JSON.stringify(JSON.stringify(this.shim)), {type: 'esms-options'}),
             this.scriptTemplate(JSON.stringify(this.importMapOptions.inputMap || {}, null, 4), {type: "importmap"}),
             this.scriptTemplate(`window.imports=${JSON.stringify(exportImports())}`),
             this.scriptTemplate(`window.env=${JSON.stringify(this.env)}`),
