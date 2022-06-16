@@ -1,6 +1,6 @@
 {
   "name": "svalit",
-  "version": "0.1.0-alpha.12",
+  "version": "0.1.0-alpha.13",
   "description": "SSR Vanilla Async Lit",
   "main": "index.mjs",
   "type": "module",
