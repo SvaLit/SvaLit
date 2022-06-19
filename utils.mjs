@@ -2,6 +2,8 @@ export const chain = (...f) => f.reduce((r, f) => r instanceof Promise ? r.then(
 
 export const all = (a = []) => a.some(p => p instanceof Promise) ? Promise.all(a) : a
 
+export const syncTemplate = (template, ...args) => [chain(all(args), args => template(...args)), template()]
+
 export const catcher = (t, h) => {
     if (t instanceof Promise) return t.catch(h)
     try {

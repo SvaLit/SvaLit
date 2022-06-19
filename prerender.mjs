@@ -1,5 +1,5 @@
 import {writeFile, mkdir} from 'fs/promises'
-import RenderThread from "./index.mjs"
+import RenderThread from "./render.mjs"
 
 export const render = ({
                            renderOptions = {},

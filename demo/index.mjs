@@ -1,4 +1,4 @@
-import RenderThread from "../index.mjs"
+import RenderThread from "../render.mjs"
 import template from './template.mjs'
 import handler from 'serve-handler'
 import {readFileSync} from "fs";
