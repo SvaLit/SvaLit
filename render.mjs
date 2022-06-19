@@ -47,7 +47,7 @@ export class RenderThread {
         this.renderEvents.emit('meta', {})
         const footer = this.importMapOptions.disableGeneration ? this.footerTemplate() :
             await this.importMapGenerator.htmlGenerate(this.footerTemplate(), this.generationOptions)
-        const updatedFooter = this.disableImports(footer)
+        const updatedFooter = this.disableImports(footer).replace(`"./": {`, `"/": {`)
         const html = Buffer.concat(this.chunks) + (this.shim ? this.shimScripts(updatedFooter) : updatedFooter)
         resetImports()
         return this.html = html
