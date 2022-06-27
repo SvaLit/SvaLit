@@ -48,7 +48,7 @@ export class RenderThread {
         const footer = this.importMapOptions.disableGeneration ? this.footerTemplate() :
             await this.importMapGenerator.htmlGenerate(this.footerTemplate(), this.generationOptions)
         const updatedFooter = this.disableImports(footer).replace(`"./": {`, `"/": {`)
-        const html = Buffer.concat(this.chunks) + (this.shim ? this.shimScripts(updatedFooter) : updatedFooter)
+        const html = Buffer.concat(this.chunks) + this.shimScripts(updatedFooter)
         resetImports()
         return this.html = html
     }
@@ -95,7 +95,7 @@ export class RenderThread {
     }
 
     shimScripts(source) {
-        if (!this.shim) return source
+        if (!this.shim.shimMode) return source
         return source.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"')
     }
 
