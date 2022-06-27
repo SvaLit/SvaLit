@@ -83,6 +83,7 @@ export class RenderThread {
     }
 
     importsTemplate(imports = exportImports(), attributes = {type: "module", import: null, defer: null}) {
+        if (this.importMapOptions.disableGeneration) return
         const importTemplate = (url) => `import '${url.startsWith('/') ? ('#root' + url) : url}';`
         return imports.map(url => this.scriptTemplate(importTemplate(url), attributes)).join('\n')
     }
@@ -94,6 +95,7 @@ export class RenderThread {
     }
 
     shimScripts(source) {
+        if (!this.shim) return source
         return source.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"')
     }
 
