@@ -2,8 +2,8 @@ import {readFileSync} from "fs";
 import EventEmitter from "events";
 import {Generator} from "@jspm/generator";
 import {resetImports, exportImports} from "./loader.mjs";
-import {readableFrom} from "@svalit/ssr/lib/readable.js";
-import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
+import {readableFrom} from "@lit-async/ssr/lib/readable.js";
+import {render} from "@lit-labs/ssr/lib/render-with-global-dom-shim.js";
 
 const clientLoader = readFileSync(new URL('client.mjs', import.meta.url))
 

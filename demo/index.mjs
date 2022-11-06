@@ -5,11 +5,14 @@ import {readFileSync} from "fs";
 import {send} from 'es-micro'
 import Router from 'router'
 
-const options = {
-    dev: true,
-    meta: {title: 'Svalit Demo'},
-    content: {footer: `<script type="module" defer>${readFileSync(new URL('template.mjs', import.meta.url))}</script>`}
-}
+const packageData = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)).toString()),
+    templateModule = readFileSync(new URL('template.mjs', import.meta.url)),
+    options = {
+        dev: true,
+        meta: {title: 'Svalit Demo'},
+        importMapOptions: {resolutions: packageData?.overrides},
+        content: {footer: `<script type="module" defer>${templateModule}</script>`}
+    }
 
 const router = Router()
     .get('/', async (req, res) => {
