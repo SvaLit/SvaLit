@@ -1,5 +1,5 @@
 import {until} from 'lit/directives/until.js';
-import {serverUntil} from "@svalit/ssr-client/directives/server-until.js";
+import {serverUntil} from "@lit-async/ssr-client/directives/server-until.js";
 
 const targetUntil = typeof process === 'object' ? serverUntil : until;
 
