@@ -1,6 +1,6 @@
 {
   "name": "svalit",
-  "version": "0.1.0-alpha.17",
+  "version": "0.1.0-alpha.18",
   "description": "SSR Vanilla Async Lit",
   "type": "module",
   "scripts": {
