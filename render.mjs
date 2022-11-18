@@ -72,6 +72,7 @@ export class RenderThread {
         return [
             this.scriptTemplate(JSON.stringify(this.shim), {type: 'esms-options'}),
             this.scriptTemplate(JSON.stringify(this.importMapOptions.inputMap || {}, null, 4), {type: "importmap"}),
+            this.scriptTemplate(`window.resolutions=${JSON.stringify(this.importMapOptions.resolutions || {})}`),
             this.scriptTemplate(`window.imports=${JSON.stringify(exportImports())}`),
             this.scriptTemplate(`window.env=${JSON.stringify(this.env)}`),
             this.scriptTemplate(`window.meta=${JSON.stringify(meta)}`),
