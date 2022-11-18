@@ -1,22 +1,22 @@
 {
   "name": "svalit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SSR Vanilla Async Lit",
   "type": "module",
   "scripts": {
     "demo": "micro-dev demo/index.mjs"
   },
   "dependencies": {
-    "@lit-async/ssr": "latest",
-    "@lit-async/ssr-client": "latest",
-    "lit": "npm:@lit-async/lit@latest",
+    "@lit-async/ssr": "2.2.3-mirror.1",
+    "@lit-async/ssr-client": "1.0.1-mirror.1",
+    "lit": "npm:@lit-async/lit@2.4.1-mirror.1",
     "@jspm/generator": "^1.0.0-beta.38",
-    "@lit-labs/ssr": "npm:@lit-async/ssr@latest",
-    "lit-element": "npm:@lit-async/lit-element@latest",
-    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@latest"
+    "@lit-labs/ssr": "npm:@lit-async/ssr@2.2.3-mirror.1",
+    "lit-element": "npm:@lit-async/lit-element@3.2.2-mirror.1",
+    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@1.0.1-mirror.1"
   },
   "devDependencies": {
-    "@svalit/simple-counter": "latest",
+    "@svalit/simple-counter": "0.0.4",
     "@webcomponents/template-shadowroot": "^0.1.0",
     "es-micro": "^1.0.0",
     "es-micro-dev": "^1.0.6",
@@ -24,22 +24,22 @@
     "serve-handler": "^6.1.3"
   },
   "overrides": {
-    "lit": "npm:@lit-async/lit@latest",
-    "lit-html": "npm:@lit-async/lit-html@latest",
-    "@lit-labs/ssr": "npm:@lit-async/ssr@latest",
-    "@lit-labs/task": "npm:@lit-async/task@latest",
-    "lit-element": "npm:@lit-async/lit-element@latest",
-    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@latest",
-    "@lit/reactive-element": "npm:@lit-async/reactive-element@latest"
+    "lit": "npm:@lit-async/lit@2.4.1-mirror.1",
+    "lit-html": "npm:@lit-async/lit-html@2.4.0-mirror.1",
+    "@lit-labs/ssr": "npm:@lit-async/ssr@2.2.3-mirror.1",
+    "@lit-labs/task": "npm:@lit-async/task@2.0.0-mirror.1",
+    "lit-element": "npm:@lit-async/lit-element@3.2.2-mirror.1",
+    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@1.0.1-mirror.1",
+    "@lit/reactive-element": "npm:@lit-async/reactive-element@1.4.2-mirror.1"
   },
   "resolutions": {
-    "lit": "npm:@lit-async/lit@latest",
-    "lit-html": "npm:@lit-async/lit-html@latest",
-    "@lit-labs/ssr": "npm:@lit-async/ssr@latest",
-    "@lit-labs/task": "npm:@lit-async/task@latest",
-    "lit-element": "npm:@lit-async/lit-element@latest",
-    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@latest",
-    "@lit/reactive-element": "npm:@lit-async/reactive-element@latest"
+    "lit": "npm:@lit-async/lit@2.4.1-mirror.1",
+    "lit-html": "npm:@lit-async/lit-html@2.4.0-mirror.1",
+    "@lit-labs/ssr": "npm:@lit-async/ssr@2.2.3-mirror.1",
+    "@lit-labs/task": "npm:@lit-async/task@2.0.0-mirror.1",
+    "lit-element": "npm:@lit-async/lit-element@3.2.2-mirror.1",
+    "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@1.0.1-mirror.1",
+    "@lit/reactive-element": "npm:@lit-async/reactive-element@1.4.2-mirror.1"
   },
   "exports": {
     "./utils.mjs": "./utils.mjs",

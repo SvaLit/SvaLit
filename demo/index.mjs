@@ -10,7 +10,7 @@ const packageData = JSON.parse(readFileSync(new URL('../package.json', import.me
     options = {
         dev: true,
         meta: {title: 'Svalit Demo'},
-        importMapOptions: {resolutions: packageData?.overrides},
+        importMapOptions: {resolutions: packageData?.overrides, rootUrl: new URL('../', import.meta.url)},
         content: {footer: `<script type="module" defer>${templateModule}</script>`}
     }
 
