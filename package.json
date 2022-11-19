@@ -1,6 +1,6 @@
 {
-  "name": "svalit",
-  "version": "0.1.2",
+  "name": "@svalit/core",
+  "version": "0.1.3",
   "description": "SSR Vanilla Async Lit",
   "type": "module",
   "scripts": {
@@ -16,7 +16,7 @@
     "@lit-labs/ssr-client": "npm:@lit-async/ssr-client@1.0.1-mirror.1"
   },
   "devDependencies": {
-    "@svalit/simple-counter": "0.0.4",
+    "@svalit/simple-counter": "latest",
     "@webcomponents/template-shadowroot": "^0.1.0",
     "es-micro": "^1.0.0",
     "es-micro-dev": "^1.0.6",
